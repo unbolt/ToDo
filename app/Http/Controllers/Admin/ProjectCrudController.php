@@ -12,20 +12,10 @@ class ProjectCrudController extends CrudController {
 
 	public function setUp() {
 
-        /*
-		|--------------------------------------------------------------------------
-		| BASIC CRUD INFORMATION
-		|--------------------------------------------------------------------------
-		*/
+
         $this->crud->setModel("App\Models\Project");
         $this->crud->setRoute("project");
         $this->crud->setEntityNameStrings('project', 'projects');
-
-        /*
-		|--------------------------------------------------------------------------
-		| BASIC CRUD INFORMATION
-		|--------------------------------------------------------------------------
-		*/
 
 
         // ------ CRUD COLUMNS
@@ -39,6 +29,7 @@ class ProjectCrudController extends CrudController {
                     'label' => 'Due Date',
                     'type' => 'date'
                 ]);
+
 
 
         // ------ CRUD FIELDS
@@ -66,6 +57,12 @@ class ProjectCrudController extends CrudController {
                         'label' => 'Description',
                         'type' => 'summernote'
                     ]);
+
+        $this->crud->addField([
+                'name' => 'status',
+                'label' => "Status",
+                'type' => 'enum'
+            ]);
 
     }
 

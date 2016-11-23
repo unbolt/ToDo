@@ -14,13 +14,14 @@ class Task extends Model {
 	|--------------------------------------------------------------------------
 	*/
 
-	protected $table = 'tasks';
-	protected $primaryKey = 'id';
-	// public $timestamps = false;
-	// protected $guarded = ['id'];
-	protected $fillable = ['name', 'description', 'project_id', 'due_date', 'status'];
-	// protected $hidden = [];
-    // protected $dates = [];
+	protected $table 		= 'tasks';
+	protected $primaryKey 	= 'id';
+	// public $timestamps 	= false;
+	// protected $guarded 	= ['id'];
+	protected $fillable 	= ['name', 'description', 'project_id', 'due_date', 'status'];
+	// protected $hidden 	= [];
+    // protected $dates 	= [];
+    protected $with 		= ['project'];
 
 	/*
 	|--------------------------------------------------------------------------

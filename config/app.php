@@ -176,13 +176,15 @@ return [
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
-
 
 
         Backpack\Base\BaseServiceProvider::class,
         Backpack\CRUD\CrudServiceProvider::class,
         Backpack\Generators\GeneratorsServiceProvider::class,
+
+
+        // This is at the end so our over-ridden routes take over the default Backpack ones
+        App\Providers\RouteServiceProvider::class,
 
     ],
 

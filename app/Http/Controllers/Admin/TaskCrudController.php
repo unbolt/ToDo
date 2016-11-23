@@ -8,30 +8,29 @@ use Backpack\CRUD\app\Http\Controllers\CrudController;
 use App\Http\Requests\TaskRequest as StoreRequest;
 use App\Http\Requests\TaskRequest as UpdateRequest;
 
+use App\Models\Task as Task;
+
 class TaskCrudController extends CrudController {
 
 	public function setUp() {
 
-        /*
-		|--------------------------------------------------------------------------
-		| BASIC CRUD INFORMATION
-		|--------------------------------------------------------------------------
-		*/
         $this->crud->setModel("App\Models\Task");
         $this->crud->setRoute("task");
         $this->crud->setEntityNameStrings('task', 'tasks');
-
-        /*
-		|--------------------------------------------------------------------------
-		| BASIC CRUD INFORMATION
-		|--------------------------------------------------------------------------
-		*/
+        $this->crud->enableReorder('name', 1);
+        $this->crud->allowAccess('reorder');
+        $this->crud->addClause('where', 'status', '!=', 'COMPLETE');
 
 		// ------ CRUD COLUMNS
         $this->crud->addColumn([
-                        'name' => 'name',
-                        'label' => "Name"
-                    ]);
+                    'name' => 'status',
+                    'label' => "Status"
+                ]);
+
+        $this->crud->addColumn([
+                    'name' => 'name',
+                    'label' => "Name"
+                ]);
 
         $this->crud->addColumn([
                     'name' => 'due_date',
@@ -40,18 +39,14 @@ class TaskCrudController extends CrudController {
                 ]);
 
         $this->crud->addColumn([
-                   'label' => "Project", // Table column heading
+                   'label' => "Project", 
                    'type' => "select",
-                   'name' => 'project_id', // the column that contains the ID of that connected entity;
-                   'entity' => 'project', // the method that defines the relationship in your Model
-                   'attribute' => "name", // foreign key attribute that is shown to user
-                   'model' => "App\Models\Project", // foreign key model
+                   'name' => 'project_id', 
+                   'entity' => 'project', 
+                   'attribute' => "name", 
+                   'model' => "App\Models\Project", 
                 ]);
 
-        $this->crud->addColumn([
-                    'name' => 'status',
-                    'label' => "Status"
-                ]);
 
         $this->crud->addFilter([
                     'name' => 'status',
@@ -110,10 +105,6 @@ class TaskCrudController extends CrudController {
                         'attribute' => 'name',
                         'model' => "App\Models\Project"
                     ]);
-
-        $this->crud->enableReorder('name', 1);
-        $this->crud->allowAccess('reorder');
-
     }
 
 	public function store(StoreRequest $request)
@@ -125,4 +116,11 @@ class TaskCrudController extends CrudController {
 	{
 		return parent::updateCrud();
 	}
+
+    public function changeStatus($id, $status) {
+        $task = Task::findOrFail($id);
+        $task->status = $status;
+        $task->save();
+        return back();
+    }
 }
