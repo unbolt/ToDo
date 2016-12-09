@@ -22,8 +22,8 @@ class DashboardController extends Controller {
         $tasks_open_pc          = round(100*$tasks_open / ($tasks_open+$tasks_inprogress));
         $tasks_closed_pc        = round(100*$tasks_closed / ($total_tasks));
 
-        $tasks_open_data = Task::where('status', '=', 'OPEN')->orderBy('due_date', 'ASC')->limit(5)->get();
-        $tasks_inprogress_data = Task::where('status', '=', 'IN PROGRESS')->orderBy('due_date', 'ASC')->limit(5)->get();
+        $tasks_open_data = Task::where('status', '=', 'OPEN')->orderBy('due_date', 'ASC')->get();
+        $tasks_inprogress_data = Task::where('status', '=', 'IN PROGRESS')->orderBy('due_date', 'ASC')->get();
         $tasks_closed_data = Task::where('status', '=', 'COMPLETE')->orderBy('updated_at', 'DESC')->limit(5)->get();
 
         $projects = Project::where('status', '=', 'ACTIVE')->orderBy('due_date', 'ASC')->get();
